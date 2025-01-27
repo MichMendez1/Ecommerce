@@ -35,7 +35,7 @@ export default function Admin() {
     return (
         <div>
             <div style={{ marginTop: '20px' }} >
-                <Link style={{ fontSize: '20px', color: 'blue', textDecoration: 'underline' }} href={"/productos"} >
+                <Link className='inline-block mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition' href={"/productos"} >
                 Ver productos
                 </Link>
             </div>

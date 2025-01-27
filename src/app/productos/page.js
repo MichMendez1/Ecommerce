@@ -7,44 +7,24 @@ export default function Productos() {
     const {productos} = useProducts();
 
     return (
-        <div>
-            <div style={{ marginTop: '20px' }} >
-                <Link style={{ fontSize: '20px', color: 'blue', textDecoration: 'underline' }} href={"/admin"} >
+        <div className="p-6">
+            <div >
+                <Link className='inline-block mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition' href={"/admin"} >
                 Administrar
                 </Link>
             </div>
-            <h1 style={{ textAlign: "center" }} >Lista de Productos</h1>
-            <div
-                style={{
-                    display: 'grid',
-                    gap: '20px',
-                    gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
-                    padding: '20px'
-                }}
-            >
+            <h1 className="text-2xl font-bold mb-4" >Lista de Productos</h1>
+            <div className="gird grid-cols-1 md:cols-2 lg:cols-3 gap-6">
                 {productos.map((producto) => (
-                    <div
-                        key={producto.id}
-                        style={{
-                            border: '1pc solid #ccc',
-                            padding: '10px',
-                            textAlign: "center"
-                        }}
-                    >
-                        <div style={{ display: 'flex', justifyContent: "center", marginBottom: '10px' }} >
-                            <img
-                                src={producto.imagen}
-                                alt={producto.nombre}
-                                style={{
-                                    maxWidth: '100%',
-                                    height: 'auto',
-                                    borderRadius: '10px'
-                                }}
-                            />
-                        </div>
-                        <h2>{producto.nombre}</h2>
-                        <p>{producto.descripcion}</p>
-                        <p><strong>${producto.precio}</strong></p>
+                    <div key={producto.id} className="bg-white border rounded-lg shadow-mb p-4" >
+                        <img
+                            src={producto.imagen}
+                            alt={producto.nombre}
+                            className="w-full h-48 object-cover rounded-md"
+                        />
+                        <h2 className="text-lg font-bold mt-4" >{producto.nombre}</h2>
+                        <p className="text-gray-600 mt-2" >{producto.descripcion}</p>
+                        <p className="text-gray-600 mt-2">${producto.precio}</p>
                     </div>
                 ))}
             </div>
