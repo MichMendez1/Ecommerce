@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body>
         <ProductProvider>
-          <div className="min-h-screen flex flex-col" >
+          <div className="bg-white text-gray-900 min-h-screen flex flex-col" >
             {children}
           </div>
         </ProductProvider>
