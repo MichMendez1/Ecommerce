@@ -1,28 +1,73 @@
-import { getProducts, addProduct, updateProduct, deleteProduct } from '../../../../models/Product' ;
+import { MongoClient, ObjectId } from 'mongodb';
 
-export async function GET() {
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
+
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+
   try {
-    const products = await getProducts();
-    return Response.json(products); // Devuelve un JSON
+    await client.connect();
+    const db = client.db('Data');
+
+    if (id) {
+      // Obtener un producto por ID
+      const product = await db.collection('products').findOne({ _id: new ObjectId(id) });
+      return Response.json(product);
+    } else {
+      // Obtener todos los productos
+      const products = await db.collection('products').find({}).toArray();
+      return Response.json(products);
+    }
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 }); // Devuelve un JSON incluso en errores
+    return Response.json({ error: error.message }, { status: 500 });
+  } finally {
+    await client.close();
   }
 }
 
 export async function POST(request) {
-  const product = await request.json();
-  await addProduct(product);
-  return Response.json({ message: 'Producto agregado' });
+  try {
+    const product = await request.json();
+    await client.connect();
+    const db = client.db('Data');
+    await db.collection('products').insertOne(product);
+    return Response.json({ message: 'Producto agregado' });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  } finally {
+    await client.close();
+  }
 }
 
 export async function PUT(request) {
-  const { id, ...updates } = await request.json();
-  await updateProduct(id, updates);
-  return Response.json({ message: 'Producto actualizado' });
+  try {
+    const { id, ...updates } = await request.json();
+    await client.connect();
+    const db = client.db('Data');
+    await db.collection('products').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updates }
+    );
+    return Response.json({ message: 'Producto actualizado' });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  } finally {
+    await client.close();
+  }
 }
 
 export async function DELETE(request) {
-  const { id } = await request.json();
-  await deleteProduct(id);
-  return Response.json({ message: 'Producto eliminado' });
+  try {
+    const { id } = await request.json();
+    await client.connect();
+    const db = client.db('Data');
+    await db.collection('products').deleteOne({ _id: new ObjectId(id) });
+    return Response.json({ message: 'Producto eliminado' });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  } finally {
+    await client.close();
+  }
 }
