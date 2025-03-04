@@ -1,5 +1,5 @@
 import Navbar from "./components/Navbar";
-import Cart from "./components/Cart";
+import Cart from "./components/CartIcon";
 import "./globals.css";
 
 export default function RootLayout({ children }) {

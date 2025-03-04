@@ -11,7 +11,7 @@ export default async function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
           <div key={product._id} className="border p-4 rounded-lg shadow-lg">
-            <img src={product.image} alt={product.name} className="w-full h-48 object-cover mb-4" />
+            <img src={product.image} alt={product.name} className="size-80 object-cover mb-4" />
             <h2 className="text-xl font-semibold">{product.name}</h2>
             <p className="text-gray-600">${product.price}</p>
             <Link href={`/product/${product._id}`}>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Cart from './CartIcon';
 
 export default function Navbar() {
   return (
@@ -23,16 +24,8 @@ export default function Navbar() {
         </div>
 
         {/* Ícono de carrito (opcional) */}
-        <div className="relative">
-          <Link href="/cart">
-            <div className="hover:text-gray-200 cursor-pointer">
-              🛒 Carrito
-            </div>
-          </Link>
-          {/* Número de items en el carrito (opcional) */}
-          <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
-            3
-          </span>
+        <div style={{paddingBottom:"2%"}} className="relative">
+          <Cart/>     
         </div>
       </div>
     </nav>
